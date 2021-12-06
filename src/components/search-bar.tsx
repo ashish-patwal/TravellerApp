@@ -2,12 +2,7 @@ import React from 'react';
 import {
   VStack,
   Input,
-  Button,
-  IconButton,
   Icon,
-  Text,
-  NativeBaseProvider,
-  Center,
   Box,
   Divider,
   Heading,
@@ -29,12 +24,13 @@ export default function SearchBar() {
         <Input
           placeholder="Search"
           variant="filled"
-          width="100%"
           bg="gray.100"
+          color="gray.500"
+          width="100%"
           borderRadius="10"
           py="1"
           px="2"
-          placeholderTextColor="black"
+          placeholderTextColor="gray.500"
           _hover={{ bg: 'gray.200', borderWidth: 0 }}
           borderWidth="0"
           InputLeftElement={

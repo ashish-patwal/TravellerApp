@@ -6,11 +6,10 @@ import {
   ScrollView,
   useColorModeValue
 } from 'native-base'
-import ThemeToggle from '../components/theme-toggle'
 import Card from '../components/card'
 import SearchBar from '../components/search-bar'
 import AnimatedColorBox from '../components/animated-color-box'
-import MapView from 'react-native-maps'
+import Map from '../components/map'
 
 export default function MainScreen() {
   let [service, setService] = React.useState("restaurants")
@@ -20,7 +19,7 @@ export default function MainScreen() {
       bg={useColorModeValue('warmGray.50', 'warmGray.900')}
       w="full"
     >
-      <MapView style={{ height: 300 }} />
+      <Map />
       <ScrollView
         borderTopLeftRadius="20px"
         borderTopRightRadius="20px"
@@ -61,7 +60,6 @@ export default function MainScreen() {
           <Card />
           <Card />
           <Card />
-          <ThemeToggle />
         </VStack>
       </ScrollView>
     </AnimatedColorBox>
