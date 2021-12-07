@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
   Select,
   CheckIcon,
@@ -6,20 +6,51 @@ import {
   ScrollView,
   useColorModeValue
 } from 'native-base'
+import { getPlacesData } from '../api/API'
+import Map from '../components/map'
 import Card from '../components/card'
 import SearchBar from '../components/search-bar'
 import AnimatedColorBox from '../components/animated-color-box'
-import Map from '../components/map'
+import Geolocation from '@react-native-community/geolocation'
+
+type categories = 'restaurants' | 'hotels' | 'attractions'
+
+interface coordinates {
+  latitude: number,
+  longitude: number
+}
+
+interface mapProps {
+  setCoordinates: React.Dispatch<React.SetStateAction<object>>,
+  setBounds: React.Dispatch<React.SetStateAction<object>>,
+  coordinates: coordinates
+}
 
 export default function MainScreen() {
-  let [service, setService] = React.useState("restaurants")
+
+  const [places, setPlaces] = useState<object[]>([])
+  const [service, setService] = useState<categories>('restaurants')
+  const [coordinates, setCoordinates] = useState<coordinates | {}>({})
+  const [bounds, setBounds] = useState<object | null>(null)
+
+  useEffect(() => {
+    console.log(coordinates, bounds)
+    getPlacesData().then((data) => {
+      setPlaces(data)
+    })
+  }, [coordinates, bounds])
+
   return (
     <AnimatedColorBox
       flex={1}
       bg={useColorModeValue('warmGray.50', 'warmGray.900')}
       w="full"
     >
-      <Map />
+      <Map
+        setCoordinates={setCoordinates}
+        setBounds={setBounds}
+        coordinates={coordinates}
+      />
       <ScrollView
         borderTopLeftRadius="20px"
         borderTopRightRadius="20px"

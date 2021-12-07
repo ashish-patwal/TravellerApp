@@ -15,9 +15,9 @@ const options: AxiosRequestConfig = {
   }
 };
 
-export const getPlacesData = async () => {
-  axios.request(options).then(function(response: AxiosResponse) {
-    return response.data!
+export async function getPlacesData() {
+  return axios.request(options).then(function({ data: { data } }: AxiosResponse) {
+    return data;
   }).catch(function(error) {
     console.error(error);
   });
