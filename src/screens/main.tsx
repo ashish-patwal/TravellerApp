@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import {
   Select,
-  CheckIcon,
   VStack,
+  CheckIcon,
+  Pressable,
   ScrollView,
   useColorModeValue
 } from 'native-base'
@@ -11,7 +12,7 @@ import Map from '../components/map'
 import Card from '../components/card'
 import SearchBar from '../components/search-bar'
 import AnimatedColorBox from '../components/animated-color-box'
-import Geolocation from '@react-native-community/geolocation'
+import ThemeToggle from '../components/theme-toggle'
 
 type categories = 'restaurants' | 'hotels' | 'attractions'
 
@@ -38,7 +39,7 @@ export default function MainScreen() {
     getPlacesData().then((data) => {
       setPlaces(data)
     })
-  }, [coordinates, bounds])
+  }, [])
 
   return (
     <AnimatedColorBox
@@ -88,9 +89,15 @@ export default function MainScreen() {
             <Select.Item label="Hotels" value="hotels" />
             <Select.Item label="Attractions" value="attractions" />
           </Select>
-          <Card />
-          <Card />
-          <Card />
+          <ThemeToggle />
+          {console.log(places)}
+          {
+            places?.map((place, i) => (
+              <Pressable>
+                <Card key={i} place={place} />
+              </Pressable>
+            ))
+          }
         </VStack>
       </ScrollView>
     </AnimatedColorBox>
