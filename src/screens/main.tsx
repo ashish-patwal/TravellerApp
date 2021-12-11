@@ -36,10 +36,10 @@ export default function MainScreen() {
 
   useEffect(() => {
     console.log(coordinates, bounds)
-    getPlacesData().then((data) => {
+    getPlacesData(service).then((data) => {
       setPlaces(data)
     })
-  }, [])
+  }, [service])
 
   return (
     <AnimatedColorBox

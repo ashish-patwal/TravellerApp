@@ -5,19 +5,20 @@ import {
   Heading,
   AspectRatio,
   Image,
+  Link,
   Icon,
   Text,
   Center,
   HStack,
-  VStack,
   Stack,
 } from "native-base"
-import { Entypo, Feather } from '@expo/vector-icons'
+import { Entypo } from '@expo/vector-icons'
+import { Linking } from 'react-native'
 
 export default function Card({ place }) {
   return (
     <Box
-      maxW="sm"
+      maxW="80"
       rounded="lg"
       borderColor="coolGray.200"
       borderWidth="1"
@@ -115,13 +116,19 @@ export default function Card({ place }) {
             </Text>
           )}
         </Stack>
-        <Text fontWeight="400">
-          Bengaluru (also called Bangalore) is the center of India's high-tech
-          industry. The city is also known for its parks and nightlife.
-        </Text>
+        {place.description ? (
+          <Text fontWeight="400">
+            {place.description}
+          </Text>
+        ) : false
+        }
+        <HStack space={2}>
+          <Link href={place.web_url}><Badge alignItems="center" rounded="md" colorScheme="violet">Trip-Advisor</Badge></Link>
+          <Link href={place.website}><Badge alignItems="center" rounded="md" colorScheme="violet">Website</Badge></Link>
+        </HStack>
         <Box
           p={2}
-          rounded="lg"
+          rounded="sm"
           m={0}
           _light={{
             backgroundColor: "violet.500"
@@ -171,11 +178,11 @@ export default function Card({ place }) {
             </Text>
           </HStack>
         </Box>
-        {place?.awards?.map(award => (
-          <HStack alignItems="center" space={4} justifyContent="space-between">
+        {place?.awards?.map((award, i: number) => (
+          <HStack key={i} alignItems="center" space={4} justifyContent="space-between">
             <Image
               source={{
-                uri: award.images.small
+                uri: award.images.large
               }}
               alt={award.display_name}
             />
