@@ -53,13 +53,12 @@ export default function SearchBar({ setCoordinates }: mapProps) {
             as={<Ionicons name="ios-search" />}
             onPress={() => {
               GeoCode(value).then((data) => {
-                console.log(data)
                 setCoordinates({
-                  latitude: data[0].latitude,
-                  longitude: data[0].longitude,
+                  latitude: data.latitude || data[0].latitude,
+                  longitude: data.longitude || data[0].longitude,
                 }
                 )
-              })
+              }).catch(err => { console.error(err) })
             }}
           />
         }

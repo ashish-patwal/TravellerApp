@@ -3,7 +3,6 @@ import {
   Select,
   VStack,
   CheckIcon,
-  Pressable,
   ScrollView,
   useColorModeValue
 } from 'native-base'
@@ -24,10 +23,10 @@ export default function MainScreen() {
 
   useEffect(() => {
     console.log(coordinates)
-    setPlaces([])
     getPlacesData({ service, coordinates }).then((data) => {
       setPlaces(data)
     })
+    return () => { setPlaces([]) }
   }, [service, coordinates])
 
   return (
@@ -78,6 +77,7 @@ export default function MainScreen() {
             <Select.Item label="Attractions" value="attractions" />
           </Select>
           {console.log(places)}
+          <ThemeToggle />
           <DataList places={places} />
         </VStack>
       </ScrollView>
