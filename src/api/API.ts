@@ -1,18 +1,30 @@
 import axios, { AxiosResponse } from "axios";
 
-export async function getPlacesData(service: string) {
+interface APIprops {
+  service: string,
+  coordinates: {
+    longitude: number,
+    latitude: number
+  }
+}
+
+export async function getPlacesData({ service, coordinates }: APIprops) {
   return axios.request({
     method: 'GET',
-    url: `https://travel-advisor.p.rapidapi.com/${service}/list-in-boundary`,
+    url: `https://travel-advisor.p.rapidapi.com/${service}/list-by-latlng`,
     params: {
-      bl_latitude: '11.847676',
-      tr_latitude: '12.838442',
-      bl_longitude: '109.095887',
-      tr_longitude: '109.149359',
+      latitude: coordinates.latitude,
+      longitude: coordinates.longitude,
+      limit: '30',
+      currency: 'USD',
+      distance: '2',
+      open_now: 'false',
+      lunit: 'km',
+      lang: 'en'
     },
     headers: {
       'x-rapidapi-host': 'travel-advisor.p.rapidapi.com',
-      'x-rapidapi-key': '5e0117beb2msh6d865fd75758213p174ee0jsndb659512de60'
+      'x-rapidapi-key': '82aa3c8703msh03c3c841c171ee8p14d689jsn7172ca56ba59'
     }
   }
   ).then(function({ data: { data } }: AxiosResponse) {

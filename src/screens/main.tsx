@@ -9,37 +9,26 @@ import {
 } from 'native-base'
 import { getPlacesData } from '../api/API'
 import Map from '../components/map'
-import Card from '../components/card'
 import SearchBar from '../components/search-bar'
 import AnimatedColorBox from '../components/animated-color-box'
 import ThemeToggle from '../components/theme-toggle'
+import DataList from '../components/data-list'
+import { categories, coordinates, mapProps } from '../components/interfaces'
 
-type categories = 'restaurants' | 'hotels' | 'attractions'
-
-interface coordinates {
-  latitude: number,
-  longitude: number
-}
-
-interface mapProps {
-  setCoordinates: React.Dispatch<React.SetStateAction<object>>,
-  setBounds: React.Dispatch<React.SetStateAction<object>>,
-  coordinates: coordinates
-}
 
 export default function MainScreen() {
 
   const [places, setPlaces] = useState<object[]>([])
   const [service, setService] = useState<categories>('restaurants')
-  const [coordinates, setCoordinates] = useState<coordinates | {}>({})
-  const [bounds, setBounds] = useState<object | null>(null)
+  const [coordinates, setCoordinates] = useState<coordinates>({ latitude: 12.91285, longitude: 100.87808 })
 
   useEffect(() => {
-    console.log(coordinates, bounds)
-    getPlacesData(service).then((data) => {
+    console.log(coordinates)
+    setPlaces([])
+    getPlacesData({ service, coordinates }).then((data) => {
       setPlaces(data)
     })
-  }, [service])
+  }, [service, coordinates])
 
   return (
     <AnimatedColorBox
@@ -49,7 +38,6 @@ export default function MainScreen() {
     >
       <Map
         setCoordinates={setCoordinates}
-        setBounds={setBounds}
         coordinates={coordinates}
       />
       <ScrollView
@@ -72,7 +60,7 @@ export default function MainScreen() {
         }}
       >
         <VStack space={5} pb={10} alignItems="center">
-          <SearchBar />
+          <SearchBar setCoordinates={setCoordinates} />
           <Select
             selectedValue={service}
             minWidth="xs"
@@ -89,15 +77,8 @@ export default function MainScreen() {
             <Select.Item label="Hotels" value="hotels" />
             <Select.Item label="Attractions" value="attractions" />
           </Select>
-          <ThemeToggle />
           {console.log(places)}
-          {
-            places?.map((place, i) => (
-              <Pressable>
-                <Card key={i} place={place} />
-              </Pressable>
-            ))
-          }
+          <DataList places={places} />
         </VStack>
       </ScrollView>
     </AnimatedColorBox>

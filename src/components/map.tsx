@@ -3,7 +3,7 @@ import { Box } from 'native-base'
 import MapView, { PROVIDER_GOOGLE } from 'react-native-maps'
 import * as Location from 'expo-location'
 
-const Map = ({ setCoordinates, setBounds, coordinates }) => {
+const Map = ({ setCoordinates, coordinates }) => {
 
   return (
     <MapView

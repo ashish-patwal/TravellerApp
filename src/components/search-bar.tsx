@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   VStack,
+  Button,
   Input,
   Icon,
   Box,
@@ -8,8 +9,23 @@ import {
   Heading,
 } from 'native-base';
 import { Ionicons } from '@expo/vector-icons';
+import { GeoCode } from '../api/GeoCoding'
 
-export default function SearchBar() {
+interface coordinates {
+  latitude: number,
+  longitude: number
+}
+
+interface mapProps {
+  setCoordinates: React.Dispatch<React.SetStateAction<coordinates>>,
+}
+
+export default function SearchBar({ setCoordinates }: mapProps) {
+
+  const [value, setValue] = useState("")
+
+  const handleChange = (event: NativeSyntheticEvent<TextInputChangeEventData>) => setValue(event.target.value)
+
   return (
     <VStack width="100%" space={5} alignItems="center">
       <Heading fontSize="lg">Cupertino</Heading>
@@ -28,12 +44,23 @@ export default function SearchBar() {
         }}
         _hover={{ bg: 'gray.200', borderWidth: 0 }}
         borderWidth="0"
+        onChange={handleChange}
         InputLeftElement={
           <Icon
             ml="2"
             size="5"
             color="gray.500"
             as={<Ionicons name="ios-search" />}
+            onPress={() => {
+              GeoCode(value).then((data) => {
+                console.log(data)
+                setCoordinates({
+                  latitude: data[0].latitude,
+                  longitude: data[0].longitude,
+                }
+                )
+              })
+            }}
           />
         }
       />

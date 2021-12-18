@@ -1,6 +1,7 @@
 import React from "react"
 import {
   Box,
+  Container,
   Badge,
   Heading,
   AspectRatio,
@@ -13,7 +14,6 @@ import {
   Stack,
 } from "native-base"
 import { Entypo } from '@expo/vector-icons'
-import { Linking } from 'react-native'
 
 export default function Card({ place }) {
   return (
@@ -178,28 +178,10 @@ export default function Card({ place }) {
             </Text>
           </HStack>
         </Box>
-        {place?.awards?.map((award, i: number) => (
-          <HStack key={i} alignItems="center" space={4} justifyContent="space-between">
-            <Image
-              source={{
-                uri: award.images.large
-              }}
-              alt={award.display_name}
-            />
-            <Text
-              color="coolGray.600"
-              _dark={{
-                color: "warmGray.200",
-              }}
-              fontWeight="400"
-            >{award.display_name}</Text>
-          </HStack>
-        ))}
-        <HStack justifyContent="space-between">
+        <Text>
           {place?.cuisine?.map(({ name }, i: number) => (
             <Badge key={i} rounded="md" colorScheme="secondary">{name}</Badge>
-          ))}
-        </HStack>
+          ))}</Text>
       </Stack>
     </Box>
   )
