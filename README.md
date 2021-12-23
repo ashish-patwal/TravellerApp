@@ -2,7 +2,7 @@
 
 #### A React native App to assist you in travel locations, hotels, restaurants and attractions with real time data fetching and map features
 
-_*A React Native app utilizing native-base and moti along with rapid api for data fetching*_
+_*A React Native app that utilizes native-base and moti along with rapid api for data fetching*_
 <br>
 <br>
 
